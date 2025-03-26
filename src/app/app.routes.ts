@@ -3,7 +3,7 @@ import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = [
   {
-    path: 'list',
+    path: 'lista',
     loadComponent: () =>
       import('./components/character-list/character-list.component').then(
         (m) => m.CharacterListComponent,
@@ -11,11 +11,11 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/inicio',
     pathMatch: 'full',
   },
   {
-    path: 'home',
+    path: 'inicio',
     component: HomeComponent,
   },
 ];

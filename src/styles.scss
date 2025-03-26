@@ -5,6 +5,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: Roboto;
 }
 
 html {
@@ -12,11 +13,24 @@ html {
   @include mat.theme(
     (
       color: mat.$cyan-palette,
-      typography: Roboto,
+      typography: (
+        plain-family: Roboto,
+        brand-family: Open Sans,
+        bold-weight: 900,
+        medium-weight: 500,
+        regular-weight: 300,
+      ),
       density: 0,
     )
   );
 }
 .root--dark_theme {
   color-scheme: dark;
+}
+body {
+  @include mat.theme(
+    (
+      typography: Roboto,
+    )
+  );
 }

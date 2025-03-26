@@ -1,8 +1,16 @@
 <mat-toolbar class="toolbar">
-  <a routerLink="/home">
-    <h1><b>Test</b> app</h1>
-  </a>
-  <span class="toolbar__spacer"></span>
+  <nav class="toolbar__navigation">
+    <button
+      mat-icon-button
+      class="toolbar__menu"
+      aria-label="Boton de menu navegacional"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a class="toolbar__logo" routerLink="/home">
+      <h1><b>Test</b> app</h1>
+    </a>
+  </nav>
   <div class="toolbar__theme">
     <mat-icon
       class="toolbar__theme__icon"
@@ -21,4 +29,31 @@
     ></mat-icon>
   </div>
 </mat-toolbar>
-<router-outlet />
+<section class="dashboard">
+  <mat-drawer-container class="dashboard__container">
+    <mat-drawer
+      class="dashboard__drawer"
+      [mode]="drawerMode"
+      (window:resize)="setDrawerMode()"
+      opened
+    >
+      <ul>
+        <li>
+          <a routerLink="/inicio" routerLinkActive="dashboard__anchor--active">
+            <mat-icon fontIcon="home" />
+            app</a
+          >
+        </li>
+        <li>
+          <a routerLink="/lista" routerLinkActive="dashboard__anchor--active">
+            <mat-icon fontIcon="face" />
+            Personajes</a
+          >
+        </li>
+      </ul>
+    </mat-drawer>
+    <mat-drawer-content class="dashboard__content">
+      <router-outlet />
+    </mat-drawer-content>
+  </mat-drawer-container>
+</section>
