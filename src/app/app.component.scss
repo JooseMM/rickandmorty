@@ -1,18 +1,29 @@
 @use "@angular/material" as mat;
 
-*,
-* > * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 .toolbar {
+  padding: 3rem 2rem;
+  margin-inline: auto;
   @include mat.toolbar-overrides(
     (
       container-background-color: transparent,
     )
   );
+  a {
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.8;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+.toolbar__navigation {
+  margin-left: 2rem;
+  display: flex;
+  list-style: none;
 }
 .toolbar__spacer {
   flex: 1 1 auto;
@@ -32,4 +43,10 @@
 
 .toolbar__theme__icon--active {
   opacity: 1;
+}
+
+@media (min-width: 62rem) {
+  .toolbar {
+    max-width: 70%;
+  }
 }

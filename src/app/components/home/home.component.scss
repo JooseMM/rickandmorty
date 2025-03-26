@@ -1,0 +1,42 @@
+@use "@angular/material" as mat;
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60dvh;
+}
+.hero__title {
+  margin-inline: auto;
+  text-align: center;
+}
+.hero__title__primary {
+  margin: 0;
+  font-size: 2.4rem;
+}
+.hero__title__secundary {
+  display: block;
+  font-size: 1.5rem;
+  opacity: 0.7;
+  margin: 0;
+}
+.hero__title__button {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+
+  @include mat.button-overrides(
+    (
+      filled-container-height: 3.5rem,
+      filled-horizontal-padding: 4rem,
+    )
+  );
+}
+@media (min-width: 62rem) {
+  .hero__title__primary {
+    font-size: 3rem;
+  }
+  .hero__title__secundary {
+    font-size: 2rem;
+  }
+}

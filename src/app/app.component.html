@@ -1,23 +1,24 @@
 <mat-toolbar class="toolbar">
-  <h1><b>Test</b> app</h1>
+  <a routerLink="/home">
+    <h1><b>Test</b> app</h1>
+  </a>
   <span class="toolbar__spacer"></span>
   <div class="toolbar__theme">
     <mat-icon
       class="toolbar__theme__icon"
-      [class.toolbar__theme__icon--active]="!isDarkTheme()"
+      [class.toolbar__theme__icon--active]="!isDarkThemeSelected()"
       fontIcon="light_mode"
     ></mat-icon>
     <mat-slide-toggle
       hideIcon="true"
-      [checked]="isDarkTheme()"
+      [checked]="isDarkThemeSelected()"
       (change)="toggleTheme()"
     />
     <mat-icon
       class="toolbar__theme__icon"
-      [class.toolbar__theme__icon--active]="isDarkTheme()"
+      [class.toolbar__theme__icon--active]="isDarkThemeSelected()"
       fontIcon="dark_mode"
     ></mat-icon>
   </div>
 </mat-toolbar>
-
 <router-outlet />
