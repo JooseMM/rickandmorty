@@ -1,1 +1,23 @@
+<mat-toolbar class="toolbar">
+  <h1><b>Test</b> app</h1>
+  <span class="toolbar__spacer"></span>
+  <div class="toolbar__theme">
+    <mat-icon
+      class="toolbar__theme__icon"
+      [class.toolbar__theme__icon--active]="!isDarkTheme()"
+      fontIcon="light_mode"
+    ></mat-icon>
+    <mat-slide-toggle
+      hideIcon="true"
+      [checked]="isDarkTheme()"
+      (change)="toggleTheme()"
+    />
+    <mat-icon
+      class="toolbar__theme__icon"
+      [class.toolbar__theme__icon--active]="isDarkTheme()"
+      fontIcon="dark_mode"
+    ></mat-icon>
+  </div>
+</mat-toolbar>
+
 <router-outlet />

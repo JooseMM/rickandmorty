@@ -4,8 +4,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-character-list',
   imports: [],
   templateUrl: './character-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CharacterListComponent {
-
-}
+export class CharacterListComponent {}

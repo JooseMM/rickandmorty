@@ -7,7 +7,9 @@ import { characterMock } from './mockCharacter';
 })
 export class CharacterService {
   private CharacterBank: WritableSignal<Character[]> = signal(characterMock);
+
   getCharacter(): Character[] {
     return this.CharacterBank();
   }
+  refreshBank(): void {}
 }

@@ -1,0 +1,35 @@
+@use "@angular/material" as mat;
+
+*,
+* > * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.toolbar {
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: transparent,
+    )
+  );
+}
+.toolbar__spacer {
+  flex: 1 1 auto;
+}
+.toolbar__theme {
+  display: flex;
+  align-items: center;
+
+  *:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+.toolbar__theme__icon {
+  opacity: 0.2;
+}
+
+.toolbar__theme__icon--active {
+  opacity: 1;
+}
