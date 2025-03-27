@@ -1,16 +1,20 @@
 @use "@angular/material" as mat;
 @use "../variables";
 
+$main-content-height: 100dvh - variables.$toolbar-height;
+
 a {
   text-decoration: none;
   color: inherit;
 }
 .toolbar {
+  background-color: var(--mat-sys-surface);
   display: flex;
   justify-content: space-between;
   min-height: 4rem;
   height: variables.$toolbar-height;
   padding-inline: 1rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 
   @include mat.toolbar-overrides(
     (
@@ -55,25 +59,33 @@ a {
   align-items: center;
 }
 .dashboard {
-  height: variables.$main-content-height;
+  height: $main-content-height;
 }
 .dashboard__container {
-  height: variables.$main-content-height;
-}
-.dashboard__content {
-  padding: 1rem;
+  --mat-sys-corner-large: 0;
+  background-color: var(--mat-sys-surface);
+  height: $main-content-height;
+  @include mat.slide-toggle-overrides(
+    (
+      handle-shape: 0,
+      track-shape: 0,
+    )
+  );
 }
 .dashboard__drawer {
   padding: 0;
-  width: 12rem;
-  background-color: var(--mat-sys-outline-variant);
+  width: 15rem;
+  background-color: var(--mat-sys-surface);
+  border: {
+    right: 1px solid var(--mat-sys-outline-variant);
+  }
 
   a {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-block: 1rem;
-    font-size: 1.5rem;
+    justify-content: start;
+    padding: 1rem 1rem;
+    font-size: 1.2rem;
     width: 100%;
 
     mat-icon {
@@ -87,6 +99,30 @@ a {
   }
 }
 .dashboard__anchor--active {
-  background-color: var(--mat-sys-outline);
-  color: var(--mat-sys-on-secondary);
+  position: relative;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  z-index: 10;
+}
+.toolbar__search {
+  margin-left: 2rem;
+}
+.dashboard__drawer__species_filter {
+  padding-inline: 1rem;
+  margin-top: 1.5rem;
+}
+.dashboard__drawer__species_filter__title {
+  display: block;
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+}
+.dashboard__drawer__species_filter__all {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.dashboard__drawer__species_filter__list {
+  margin-left: 0.5rem;
+  li:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 }

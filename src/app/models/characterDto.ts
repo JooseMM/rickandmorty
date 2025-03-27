@@ -4,10 +4,10 @@ import { Gender } from './gender.enum';
 export interface CharacterDto {
   id: number; // The id of the character.
   name: string; // The name of the character.
-  status: CharacterStatus;
+  status: string;
   species: string; // The species of the character.
   type: string; // The type or subspecies of the character.
-  gender: Gender;
+  gender: string;
   origin: {
     name: string; // Name of the character's origin location.
     link: string; // Link to the character's origin location.

@@ -10,6 +10,7 @@
     <a class="toolbar__logo" routerLink="/home">
       <h1><b>Test</b> app</h1>
     </a>
+    <div class="toolbar__search"></div>
   </nav>
   <div class="toolbar__theme">
     <mat-icon
@@ -37,20 +38,34 @@
       (window:resize)="setDrawerMode()"
       opened
     >
+      <!-- navigation -->
       <ul>
         <li>
-          <a routerLink="/inicio" routerLinkActive="dashboard__anchor--active">
+          <a routerLink="/home" routerLinkActive="dashboard__anchor--active">
             <mat-icon fontIcon="home" />
-            app</a
+            Home</a
           >
         </li>
         <li>
-          <a routerLink="/lista" routerLinkActive="dashboard__anchor--active">
+          <a routerLink="/list" routerLinkActive="dashboard__anchor--active">
             <mat-icon fontIcon="face" />
-            Personajes</a
+            Characters</a
           >
         </li>
       </ul>
+      <!-- filtering species -->
+      @if (isListRouteActive()) {
+        <div class="dashboard__drawer__species_filter">
+          <div class="dashboard__drawer__species_filter__title">
+            Species Filter
+          </div>
+          <mat-selection-list [multiple]="false" #shoes>
+            @for (option of speciesList; track $index) {
+              <mat-list-option>{{ option }}</mat-list-option>
+            }
+          </mat-selection-list>
+        </div>
+      }
     </mat-drawer>
     <mat-drawer-content class="dashboard__content">
       <router-outlet />

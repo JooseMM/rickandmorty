@@ -1,14 +1,90 @@
+@use "../../../variables";
+@use "@angular/material" as mat;
+
+$toolbar-height: 8dvh;
+$main-content-height: 100dvh - variables.$toolbar-height - $toolbar-height;
+
 .list {
-  height: 89dvh;
+  height: $main-content-height !important;
+  overflow-y: auto;
 }
+
 .list__container {
-  height: 89dvh;
+  padding: 0;
 }
-.list__content {
-  padding: 1rem;
+.list__toolbar {
+  padding-inline: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+  height: $toolbar-height;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
-.list__drawer {
-  padding: 1rem;
-  width: 12rem;
-  background-color: gray;
+
+.list__toolbar__form {
+  min-width: 18rem;
+  margin-right: 2rem;
+  margin-bottom: -20px;
+  @include mat.form-field-overrides(
+    (
+      container-height: 0,
+      container-vertical-padding: 0.5rem,
+      outlined-container-shape: 1.3rem,
+    )
+  );
+}
+.list__toolbar__chip {
+  margin-right: 2rem;
+  @include mat.icon-overrides(
+    (
+      color: red,
+    )
+  );
+}
+.list__card {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 96%;
+  height: 90%;
+}
+.list__card__content {
+  margin-inline: 0.5rem;
+}
+.list__card__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 0 0 84%;
+
+  h3 {
+    margin-bottom: 0.3rem;
+  }
+  span {
+    font-size: 1.1rem;
+  }
+}
+.list__card__image_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 6rem;
+  height: 6rem;
+  border: 0.2rem solid var(--mat-sys-outline-variant);
+  border-radius: 10rem;
+
+  img {
+    height: 100%;
+  }
+}
+.list__card__actions {
+  display: flex;
+  justify-content: end;
+  padding: 0;
+  margin: 0;
 }
