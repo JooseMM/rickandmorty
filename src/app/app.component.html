@@ -59,9 +59,13 @@
           <div class="dashboard__drawer__species_filter__title">
             Species Filter
           </div>
-          <mat-selection-list [multiple]="false" #shoes>
+          <mat-selection-list
+            [multiple]="false"
+            #species
+            (selectionChange)="onListSelectionChange($event)"
+          >
             @for (option of speciesList; track $index) {
-              <mat-list-option>{{ option }}</mat-list-option>
+              <mat-list-option [value]="option">{{ option }}</mat-list-option>
             }
           </mat-selection-list>
         </div>

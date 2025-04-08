@@ -2,13 +2,30 @@
   <mat-toolbar class="list__toolbar">
     <!-- character species  -->
     <mat-chip-listbox aria-label="State filter" class="list__toolbar__chip">
-      <mat-chip-option>{{ stateOptions.Alive }} </mat-chip-option>
-      <mat-chip-option>{{ stateOptions.Dead }} </mat-chip-option>
-      <mat-chip-option>{{ stateOptions.Unknown }} </mat-chip-option>
+      <mat-chip-option
+        [value]="stateOptions.Alive"
+        (selectionChange)="handleSelectionChange($event)"
+        >{{ stateOptions.Alive }}
+      </mat-chip-option>
+      <mat-chip-option
+        [value]="stateOptions.Dead"
+        (selectionChange)="handleSelectionChange($event)"
+        >{{ stateOptions.Dead }}
+      </mat-chip-option>
+      <mat-chip-option
+        [value]="stateOptions.Unknown"
+        (selectionChange)="handleSelectionChange($event)"
+        >{{ stateOptions.Unknown }}
+      </mat-chip-option>
     </mat-chip-listbox>
     <!-- search -->
     <mat-form-field appearance="outline" class="list__toolbar__form">
-      <input matInput [placeholder]="'Search by character name'" />
+      <input
+        matInput
+        [placeholder]="'Search by character name'"
+        [(ngModel)]="searchByName"
+        (ngModelChange)="onSearch($event)"
+      />
       <button mat-icon-button matSuffix>
         <mat-icon>search</mat-icon>
       </button>

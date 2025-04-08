@@ -11,10 +11,13 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
+import {
+  MatChipSelectionChange,
+  MatChipsModule,
+} from '@angular/material/chips';
 import { FilterOptions } from '../../models/filterState';
-import { speciesArray } from '../../utils/characterSpeciesBank';
 import { MatCardModule } from '@angular/material/card';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-character-list',
@@ -30,6 +33,7 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatChipsModule,
     MatCardModule,
+    FormsModule,
   ],
   templateUrl: './character-list.component.html',
   styleUrl: './character-list.component.scss',
@@ -37,27 +41,32 @@ import { MatCardModule } from '@angular/material/card';
 export class CharacterListComponent implements OnInit {
   protected readonly filterOptions = FilterOptions;
   protected readonly stateOptions = CharacterStatus;
-  private CharacterService = inject(CharacterService);
+  private characterService = inject(CharacterService);
   protected cols: number = 2;
   protected characterBank = computed(() =>
-    this.CharacterService.getCharacter(),
+    this.characterService.getCharacter(),
   );
   protected paginatorInfo: Signal<PaginatorInfo> = computed(() =>
-    this.CharacterService.getPaginatorInfo(),
+    this.characterService.getPaginatorInfo(),
   );
   protected filterBy: FilterOptions | null = null;
   protected searchByName = '';
+  private searchSubject = new Subject<string>();
 
-  changePageByOne(operator: number) {
-    // TODO:
-  }
   ngOnInit(): void {
     this.setCols();
+    this.searchSubject.pipe(debounceTime(700)).subscribe((value) => {
+      this.characterService.setFilterState(this.filterOptions.ByName, value);
+    });
+  }
+  handleSelectionChange(selected: MatChipSelectionChange) {
+    const newState = selected.selected ? selected.source.value : null;
+    this.characterService.setFilterState(FilterOptions.ByStatus, newState);
   }
   setCols(): void {
     this.cols = isMobile(window.innerWidth) ? 1 : 2;
   }
-  setFilterBy(option: FilterOptions) {
-    this.filterBy = option;
+  onSearch(value: string) {
+    this.searchSubject.next(value);
   }
 }

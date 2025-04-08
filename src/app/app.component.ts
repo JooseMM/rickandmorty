@@ -1,7 +1,6 @@
 import {
   Component,
   computed,
-  effect,
   inject,
   OnInit,
   Signal,
@@ -21,7 +20,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from './services/theme.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
+import { MatListModule, MatSelectionListChange } from '@angular/material/list';
 import { isMobile } from './utils/isMobile';
 import { DrawerMode } from './models';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,6 +29,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { speciesArray } from './utils/characterSpeciesBank';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { CharacterService } from './services/character.service';
+import { FilterOptions } from './models/filterState';
 
 @Component({
   selector: 'app-root',
@@ -54,6 +55,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
+  protected readonly characterService = inject(CharacterService);
   protected readonly routerService = inject(Router);
   protected readonly speciesList = ['All', ...speciesArray];
   protected drawerMode: DrawerMode = 'over';
@@ -61,7 +63,6 @@ export class AppComponent implements OnInit {
   protected isDarkThemeSelected = computed(() =>
     this.themeService.getCurrentTheme(),
   );
-  protected searchTerm = '';
   protected onRouterChange = toSignal(this.routerService.events);
   protected readonly isListRouteActive: Signal<boolean> = computed(() => {
     if (this.onRouterChange() instanceof NavigationEnd) {
@@ -70,14 +71,15 @@ export class AppComponent implements OnInit {
       return false;
     }
   });
-  constructor() {
-    effect(() => console.log(this.speciesFilterState()));
-  }
   ngOnInit(): void {
     this.setDrawerMode();
   }
   toggleTheme(): void {
     this.themeService.toggleTheme();
+  }
+  onListSelectionChange(event: MatSelectionListChange): void {
+    const selected = event.options[0].value;
+    this.characterService.setFilterState(FilterOptions.BySpecies, selected);
   }
   setDrawerMode(): void {
     this.drawerMode = isMobile(window.innerWidth) ? 'over' : 'side';
@@ -85,7 +87,6 @@ export class AppComponent implements OnInit {
   readonly speciesFilterState = signal({
     species: speciesArray.map((item) => ({ name: item, selected: false })),
   });
-
   update(selected: boolean, index: number) {
     this.speciesFilterState.update((task) => ({
       ...task,

@@ -1,8 +1,7 @@
 import { CharacterStatus } from './characterStatus.enum';
-import { FilterOptions } from './filterState';
 
 export interface FilterState {
-  Filter: string;
+  byName: string;
   bySpecies: string;
   byStatus: CharacterStatus | null;
 }
