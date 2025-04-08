@@ -64,7 +64,9 @@
               <span>currently on {{ character.location }}</span>
             </mat-card-content>
             <mat-card-actions class="list__card__actions">
-              <button mat-stroked-button>More info</button>
+              <button (click)="onOpenDialog(character)" mat-stroked-button>
+                More info
+              </button>
             </mat-card-actions>
           </div>
         </mat-card>

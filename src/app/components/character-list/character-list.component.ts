@@ -3,7 +3,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { isMobile } from '../../utils/isMobile';
 import { CharacterService } from '../../services/character.service';
-import { CharacterStatus, PaginatorInfo } from '../../models';
+import { Character, CharacterStatus, PaginatorInfo } from '../../models';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +18,8 @@ import {
 import { FilterOptions } from '../../models/filterState';
 import { MatCardModule } from '@angular/material/card';
 import { debounceTime, Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-character-list',
@@ -52,6 +54,7 @@ export class CharacterListComponent implements OnInit {
   protected filterBy: FilterOptions | null = null;
   protected searchByName = '';
   private searchSubject = new Subject<string>();
+  private dialog = inject(MatDialog);
 
   ngOnInit(): void {
     this.setCols();
@@ -59,14 +62,20 @@ export class CharacterListComponent implements OnInit {
       this.characterService.setFilterState(this.filterOptions.ByName, value);
     });
   }
-  handleSelectionChange(selected: MatChipSelectionChange) {
+  handleSelectionChange(selected: MatChipSelectionChange): void {
     const newState = selected.selected ? selected.source.value : null;
     this.characterService.setFilterState(FilterOptions.ByStatus, newState);
   }
   setCols(): void {
     this.cols = isMobile(window.innerWidth) ? 1 : 2;
   }
-  onSearch(value: string) {
+  onSearch(value: string): void {
     this.searchSubject.next(value);
+  }
+  onOpenDialog(character: Character) {
+    this.dialog.open(ModalComponent, {
+      data: character,
+    });
+    console.log(character);
   }
 }
