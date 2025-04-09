@@ -36,7 +36,7 @@ $main-content-height: 100dvh - variables.$toolbar-height - $toolbar-height;
     )
   );
 }
-.list__toolbar__form--desktop {
+.list__toolbar__form {
   @extend .list__toolbar__form;
 }
 .list__toolbar__chip {
@@ -105,10 +105,34 @@ $main-content-height: 100dvh - variables.$toolbar-height - $toolbar-height;
   .list__toolbar__form--desktop {
     display: none;
   }
-  .list__paginator--desktop {
-    display: none;
-  }
   .list__toolbar {
     justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+  }
+  .list__toolbar__chip {
+    display: none;
+  }
+  .list__card__container {
+    flex: 1;
+  }
+  mat-card-content {
+    span {
+      display: none;
+    }
+    h3 {
+      font-size: 1.3rem;
+    }
+  }
+  .list__card {
+    height: 92%;
+    padding: 1rem;
+  }
+  .spinner {
+    transform: scale(1);
+    left: 38%;
+  }
+  .list__card__actions {
+    margin-top: 1rem;
   }
 }

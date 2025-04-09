@@ -1,5 +1,6 @@
-mat-dialog-content {
+.modal {
   width: 30rem;
+  padding: 2rem;
 }
 
 .header__profile {
@@ -27,7 +28,6 @@ mat-dialog-content {
   .content__title {
     display: flex;
     justify-content: space-between;
-    padding-right: 2rem;
     align-items: center;
     font-size: 1.5rem;
     font-weight: bold;
@@ -102,5 +102,24 @@ button[mat-button] {
   mat-icon {
     transform: scale(3);
     color: white;
+  }
+}
+
+@media (max-width: 90rem) {
+  .modal {
+    width: 100%;
+    padding: 1.5rem;
+  }
+  .content__body {
+    grid-template-columns: 1fr;
+  }
+  .content__title {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+}
+.content__body {
+  > ul:not(:last-child) {
+    margin-bottom: 1rem;
   }
 }

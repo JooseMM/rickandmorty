@@ -126,11 +126,15 @@ a {
     margin-bottom: 1rem;
   }
 }
+.list__toolbar__form--mobile {
+  display: none;
+}
 @media (max-width: 90rem) {
   .list__toolbar__form--mobile {
+    display: block;
     margin-top: 1.5rem;
-    margin-left: 0.8rem;
-    width: 90%;
+    margin-left: 1.2rem;
+    width: 80%;
 
     mat-icon {
       transform: scale(1.1);
@@ -139,8 +143,13 @@ a {
       (
         container-height: 0,
         container-vertical-padding: 0.8rem,
-        outlined-container-shape: 2rem,
+        outlined-container-shape: 0.8rem,
       )
     );
+  }
+  .list__toolbar__chip {
+    margin-top: 1rem;
+    width: 80%;
+    margin-inline: auto;
   }
 }

@@ -72,6 +72,26 @@
           </mat-selection-list>
         </div>
       }
+      <mat-chip-listbox
+        class="mat-mdc-chip-set-stacked list__toolbar__chip"
+        aria-label="State filter"
+      >
+        <mat-chip-option
+          [value]="stateOptions.Alive"
+          (selectionChange)="handleSelectionChange($event)"
+          >{{ stateOptions.Alive }}
+        </mat-chip-option>
+        <mat-chip-option
+          [value]="stateOptions.Dead"
+          (selectionChange)="handleSelectionChange($event)"
+          >{{ stateOptions.Dead }}
+        </mat-chip-option>
+        <mat-chip-option
+          [value]="stateOptions.Unknown"
+          (selectionChange)="handleSelectionChange($event)"
+          >{{ stateOptions.Unknown }}
+        </mat-chip-option>
+      </mat-chip-listbox>
       <mat-form-field appearance="outline" class="list__toolbar__form--mobile">
         <input
           matInput

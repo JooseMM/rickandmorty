@@ -22,7 +22,7 @@ import { ThemeService } from './services/theme.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule, MatSelectionListChange } from '@angular/material/list';
 import { isMobile } from './utils/isMobile';
-import { DrawerMode } from './models';
+import { CharacterStatus, DrawerMode } from './models';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -33,11 +33,16 @@ import { CharacterService } from './services/character.service';
 import { FilterOptions } from './models/filterState';
 import { debounceTime, Subject } from 'rxjs';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatChipSelectionChange,
+  MatChipsModule,
+} from '@angular/material/chips';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
+    MatChipsModule,
     RouterLinkActive,
     MatToolbar,
     MatIcon,
@@ -76,6 +81,8 @@ export class AppComponent implements OnInit {
   });
   private searchSubject = new Subject<string>();
   protected searchByName = '';
+  protected readonly stateOptions = CharacterStatus;
+
   filterOptions: any;
   ngOnInit(): void {
     this.setDrawerMode();
@@ -111,5 +118,9 @@ export class AppComponent implements OnInit {
   }
   onSearchByName(name: string) {
     this.searchSubject.next(name);
+  }
+  handleSelectionChange(selected: MatChipSelectionChange): void {
+    const newState = selected.selected ? selected.source.value : null;
+    this.characterService.setFilterState(FilterOptions.ByStatus, newState);
   }
 }

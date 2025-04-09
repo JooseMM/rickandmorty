@@ -14,14 +14,7 @@ import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-modal',
-  imports: [
-    NgClass,
-    MatDialogContent,
-    MatDialogClose,
-    MatCardModule,
-    MatIcon,
-    MatButtonModule,
-  ],
+  imports: [NgClass, MatDialogClose, MatCardModule, MatIcon, MatButtonModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
