@@ -6,4 +6,5 @@ export interface PaginatorInfo {
   pageSize: pageSizeOptions;
   nextPage: string;
   previousPage: string;
+  pageIndex: number;
 }

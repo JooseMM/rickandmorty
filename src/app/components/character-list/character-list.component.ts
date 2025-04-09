@@ -1,5 +1,17 @@
-import { Component, computed, inject, OnInit, Signal } from '@angular/core';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  Signal,
+  ViewChild,
+} from '@angular/core';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { isMobile } from '../../utils/isMobile';
 import { CharacterService } from '../../services/character.service';
@@ -20,10 +32,12 @@ import { MatCardModule } from '@angular/material/card';
 import { debounceTime, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
+import { LoadingContentService } from '../../services/loading-content.service';
 
 @Component({
   selector: 'app-character-list',
   imports: [
+    MatProgressSpinnerModule,
     MatPaginatorModule,
     MatGridListModule,
     MatToolbar,
@@ -44,6 +58,7 @@ export class CharacterListComponent implements OnInit {
   protected readonly filterOptions = FilterOptions;
   protected readonly stateOptions = CharacterStatus;
   private characterService = inject(CharacterService);
+  protected loadingService = inject(LoadingContentService);
   protected cols: number = 2;
   protected characterBank = computed(() =>
     this.characterService.getCharacter(),
@@ -51,7 +66,6 @@ export class CharacterListComponent implements OnInit {
   protected paginatorInfo: Signal<PaginatorInfo> = computed(() =>
     this.characterService.getPaginatorInfo(),
   );
-  protected filterBy: FilterOptions | null = null;
   protected searchByName = '';
   private searchSubject = new Subject<string>();
   private dialog = inject(MatDialog);
@@ -76,6 +90,9 @@ export class CharacterListComponent implements OnInit {
     this.dialog.open(ModalComponent, {
       data: character,
     });
-    console.log(character);
+  }
+  onPageChange(pageInfo: PageEvent) {
+    const isNextPage = pageInfo.pageIndex > this.paginatorInfo().pageIndex;
+    this.characterService.changePageIndex(isNextPage);
   }
 }

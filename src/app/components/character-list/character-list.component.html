@@ -37,6 +37,8 @@
       [length]="paginatorInfo().length"
       [pageSize]="paginatorInfo().pageSize"
       [pageSizeOptions]="paginatorInfo().pageSizeOptions"
+      [pageIndex]="paginatorInfo().pageIndex"
+      (page)="onPageChange($event)"
       aria-label="Select page"
     ></mat-paginator>
   </mat-toolbar>
@@ -46,31 +48,35 @@
     [cols]="cols"
     (window:resize)="setCols()"
   >
-    @for (character of characterBank(); track $index) {
-      <mat-grid-tile class="list__tile">
-        <mat-card class="list__card" appearance="outlined">
-          <div class="list__card__image_container">
-            <img
-              mat-card-image
-              [src]="character.image"
-              alt="Photo of a Shiba Inu"
-            />
-          </div>
-          <div class="list__card__container">
-            <mat-card-content class="list__card__content">
-              <mat-card-title>
-                <h3>{{ character.name }}</h3>
-              </mat-card-title>
-              <span>currently on {{ character.location }}</span>
-            </mat-card-content>
-            <mat-card-actions class="list__card__actions">
-              <button (click)="onOpenDialog(character)" mat-stroked-button>
-                More info
-              </button>
-            </mat-card-actions>
-          </div>
-        </mat-card>
-      </mat-grid-tile>
+    @if (loadingService.getLoadingState()) {
+      <mat-spinner mode="indeterminate" class="spinner"></mat-spinner>
+    } @else {
+      @for (character of characterBank(); track $index) {
+        <mat-grid-tile class="list__tile">
+          <mat-card class="list__card" appearance="outlined">
+            <div class="list__card__image_container">
+              <img
+                mat-card-image
+                [src]="character.image"
+                alt="Photo of a Shiba Inu"
+              />
+            </div>
+            <div class="list__card__container">
+              <mat-card-content class="list__card__content">
+                <mat-card-title>
+                  <h3>{{ character.name }}</h3>
+                </mat-card-title>
+                <span>currently on {{ character.location }}</span>
+              </mat-card-content>
+              <mat-card-actions class="list__card__actions">
+                <button (click)="onOpenDialog(character)" mat-stroked-button>
+                  More info
+                </button>
+              </mat-card-actions>
+            </div>
+          </mat-card>
+        </mat-grid-tile>
+      }
     }
   </mat-grid-list>
 </main>

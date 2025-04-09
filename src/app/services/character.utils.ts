@@ -9,9 +9,10 @@ export const filterInitialState: FilterState = {
 };
 
 export const paginatorInitialState: PaginatorInfo = {
+  pageIndex: 0,
   length: 0,
-  pageSizeOptions: [5, 10, 20],
-  pageSize: 5,
+  pageSizeOptions: [20],
+  pageSize: 20,
   previousPage: '',
   nextPage: '',
 };

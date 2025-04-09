@@ -48,12 +48,13 @@ export class CharacterService {
   getCharacter(): Character[] {
     return this.characterBank();
   }
-  private refreshBank(filterOption?: FilterState): void {
-    let endpoint = 'https://rickandmortyapi.com/api/character';
+  private refreshBank(filterOption?: FilterState, nextPage?: string): void {
+    const endpoint = nextPage ?? 'https://rickandmortyapi.com/api/character';
     let params;
 
     if (filterOption) {
       params = createQueries(filterOption);
+      this.paginatorInfo.update((prev) => ({ ...prev, pageIndex: 0 }));
     }
 
     this.http
@@ -75,5 +76,18 @@ export class CharacterService {
       ...prev,
       [key]: newValue,
     }));
+  }
+
+  changePageIndex(nextPage: boolean): void {
+    this.refreshBank(
+      undefined, // paginatorInfo contains already the filters
+      nextPage
+        ? this.paginatorInfo().nextPage
+        : this.paginatorInfo().previousPage,
+    );
+    this.paginatorInfo.update((prev) => {
+      prev.pageIndex = nextPage ? prev.pageIndex + 1 : prev.pageIndex - 1;
+      return prev;
+    });
   }
 }
