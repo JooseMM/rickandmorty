@@ -38,7 +38,6 @@ import { LoadingContentService } from '../../services/loading-content.service';
     MatSelectModule,
     MatChipsModule,
     MatCardModule,
-    FormsModule,
   ],
   templateUrl: './character-list.component.html',
   styleUrl: './character-list.component.scss',
@@ -70,7 +69,8 @@ export class CharacterListComponent implements OnInit {
     this.characterService.setFilterState(FilterOptions.ByStatus, newState);
   }
   setCols(): void {
-    this.cols = isMobile(window.innerWidth) ? 1 : 2;
+    const currentWidth = window.innerWidth;
+    this.cols = currentWidth > 700 ? 2 : 1;
   }
   onSearch(value: string): void {
     this.searchSubject.next(value);

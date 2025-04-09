@@ -5,6 +5,7 @@ import {
   OnInit,
   Signal,
   signal,
+  ViewChild,
 } from '@angular/core';
 import {
   RouterLink,
@@ -19,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from './services/theme.service';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule, MatSelectionListChange } from '@angular/material/list';
 import { isMobile } from './utils/isMobile';
 import { CharacterStatus, DrawerMode } from './models';
@@ -56,7 +57,6 @@ import {
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    FormsModule,
     MatCheckboxModule,
   ],
   templateUrl: './app.component.html',
@@ -65,7 +65,7 @@ import {
 export class AppComponent implements OnInit {
   protected readonly characterService = inject(CharacterService);
   protected readonly routerService = inject(Router);
-  protected readonly speciesList = ['', ...speciesArray];
+  protected readonly speciesList = ['', ...speciesArray]; // we add '' to stop filtering
   protected drawerMode: DrawerMode = 'over';
   private readonly themeService = inject(ThemeService);
   protected isDarkThemeSelected = computed(() =>
@@ -82,8 +82,12 @@ export class AppComponent implements OnInit {
   private searchSubject = new Subject<string>();
   protected searchByName = '';
   protected readonly stateOptions = CharacterStatus;
+  readonly speciesFilterState = signal({
+    species: speciesArray.map((item) => ({ name: item, selected: false })),
+  });
+  @ViewChild('drawer') drawer!: MatDrawer;
 
-  filterOptions: any;
+  filterOptions = FilterOptions;
   ngOnInit(): void {
     this.setDrawerMode();
     this.searchSubject.pipe(debounceTime(700)).subscribe((value) => {
@@ -100,9 +104,6 @@ export class AppComponent implements OnInit {
   setDrawerMode(): void {
     this.drawerMode = isMobile(window.innerWidth) ? 'over' : 'side';
   }
-  readonly speciesFilterState = signal({
-    species: speciesArray.map((item) => ({ name: item, selected: false })),
-  });
   update(selected: boolean, index: number) {
     this.speciesFilterState.update((task) => ({
       ...task,
@@ -122,5 +123,8 @@ export class AppComponent implements OnInit {
   handleSelectionChange(selected: MatChipSelectionChange): void {
     const newState = selected.selected ? selected.source.value : null;
     this.characterService.setFilterState(FilterOptions.ByStatus, newState);
+  }
+  toggleDrawer() {
+    this.drawer.toggle();
   }
 }

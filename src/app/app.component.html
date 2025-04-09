@@ -1,17 +1,21 @@
 <mat-toolbar class="toolbar">
   <nav class="toolbar__navigation">
+    <!-- menu button -->
     <button
       mat-icon-button
+      (click)="toggleDrawer()"
       class="toolbar__menu"
       aria-label="Boton de menu navegacional"
     >
       <mat-icon>menu</mat-icon>
     </button>
+    <!-- logo -->
     <a class="toolbar__logo" routerLink="/home">
       <h1><b>Test</b> app</h1>
     </a>
     <div class="toolbar__search"></div>
   </nav>
+  <!-- theme switcher -->
   <div class="toolbar__theme">
     <mat-icon
       class="toolbar__theme__icon"
@@ -32,13 +36,14 @@
 </mat-toolbar>
 <section class="dashboard">
   <mat-drawer-container class="dashboard__container">
+    <!-- navigation -->
     <mat-drawer
+      #drawer
       class="dashboard__drawer"
       [mode]="drawerMode"
       (window:resize)="setDrawerMode()"
       opened
     >
-      <!-- navigation -->
       <ul>
         <li>
           <a routerLink="/home" routerLinkActive="dashboard__anchor--active">
@@ -53,7 +58,7 @@
           >
         </li>
       </ul>
-      <!-- filtering species -->
+      <!-- species filter -->
       @if (isListRouteActive()) {
         <div class="dashboard__drawer__species_filter">
           <div class="dashboard__drawer__species_filter__title">
@@ -71,39 +76,47 @@
             }
           </mat-selection-list>
         </div>
+        <!-- status filter  -->
+        <span class="filter__title--mobile">Status Filter</span>
+        <mat-chip-listbox
+          class="mat-mdc-chip-set-stacked list__toolbar__chip"
+          aria-label="State filter"
+        >
+          <mat-chip-option
+            [value]="stateOptions.Alive"
+            (selectionChange)="handleSelectionChange($event)"
+            >{{ stateOptions.Alive }}
+          </mat-chip-option>
+          <mat-chip-option
+            [value]="stateOptions.Dead"
+            (selectionChange)="handleSelectionChange($event)"
+            >{{ stateOptions.Dead }}
+          </mat-chip-option>
+          <mat-chip-option
+            [value]="stateOptions.Unknown"
+            (selectionChange)="handleSelectionChange($event)"
+            >{{ stateOptions.Unknown }}
+          </mat-chip-option>
+        </mat-chip-listbox>
+        <!-- search name  -->
+        <span class="filter__title--mobile">Name Filter</span>
+        <mat-form-field
+          appearance="outline"
+          class="list__toolbar__form--mobile"
+        >
+          <input
+            matInput
+            [placeholder]="'Search by name'"
+            [(ngModel)]="searchByName"
+            (ngModelChange)="onSearchByName($event)"
+          />
+          <button mat-icon-button matSuffix>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
       }
-      <mat-chip-listbox
-        class="mat-mdc-chip-set-stacked list__toolbar__chip"
-        aria-label="State filter"
-      >
-        <mat-chip-option
-          [value]="stateOptions.Alive"
-          (selectionChange)="handleSelectionChange($event)"
-          >{{ stateOptions.Alive }}
-        </mat-chip-option>
-        <mat-chip-option
-          [value]="stateOptions.Dead"
-          (selectionChange)="handleSelectionChange($event)"
-          >{{ stateOptions.Dead }}
-        </mat-chip-option>
-        <mat-chip-option
-          [value]="stateOptions.Unknown"
-          (selectionChange)="handleSelectionChange($event)"
-          >{{ stateOptions.Unknown }}
-        </mat-chip-option>
-      </mat-chip-listbox>
-      <mat-form-field appearance="outline" class="list__toolbar__form--mobile">
-        <input
-          matInput
-          [placeholder]="'Search by name'"
-          [(ngModel)]="searchByName"
-          (ngModelChange)="onSearchByName($event)"
-        />
-        <button mat-icon-button matSuffix>
-          <mat-icon>search</mat-icon>
-        </button>
-      </mat-form-field>
     </mat-drawer>
+    <!-- main content -->
     <mat-drawer-content class="dashboard__content">
       <router-outlet />
     </mat-drawer-content>

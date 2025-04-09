@@ -126,13 +126,15 @@ a {
     margin-bottom: 1rem;
   }
 }
-.list__toolbar__form--mobile {
+.list__toolbar__form--mobile,
+.list__toolbar__chip,
+.filter__title--mobile {
   display: none;
 }
 @media (max-width: 90rem) {
   .list__toolbar__form--mobile {
     display: block;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     margin-left: 1.2rem;
     width: 80%;
 
@@ -142,14 +144,21 @@ a {
     @include mat.form-field-overrides(
       (
         container-height: 0,
-        container-vertical-padding: 0.8rem,
+        container-vertical-padding: 0.6rem,
         outlined-container-shape: 0.8rem,
       )
     );
   }
   .list__toolbar__chip {
+    display: block;
     margin-top: 1rem;
     width: 80%;
     margin-inline: auto;
+  }
+
+  .filter__title--mobile {
+    display: block;
+    margin-top: 1rem;
+    padding-inline: 1rem;
   }
 }

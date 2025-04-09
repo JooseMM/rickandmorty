@@ -6,9 +6,6 @@ import { effect, Injectable, signal, WritableSignal } from '@angular/core';
 export class LoadingContentService {
   private isLoading: WritableSignal<boolean> = signal(true);
 
-  constructor() {
-    effect(() => console.log('is loading: ' + this.isLoading()));
-  }
   getLoadingState(): boolean {
     return this.isLoading();
   }

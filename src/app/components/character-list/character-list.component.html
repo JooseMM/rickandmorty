@@ -19,7 +19,7 @@
       </mat-chip-option>
     </mat-chip-listbox>
     <!-- search -->
-    <mat-form-field appearance="outline" class="list__toolbar__form--desktop">
+    <mat-form-field appearance="outline" class="list__toolbar__form">
       <input
         matInput
         [placeholder]="'Search by character name'"
@@ -76,6 +76,12 @@
             </div>
           </mat-card>
         </mat-grid-tile>
+      } @empty {
+        <div class="not-found">
+          <span class="error">No results found.</span>
+          <span class="suggestion">Try changing your filters.</span>
+          <span class="material-symbols-outlined"> error </span>
+        </div>
       }
     }
   </mat-grid-list>

@@ -13,7 +13,7 @@ import {
 } from '../models/';
 import { characterAdapter } from '../utils/characterAdapter';
 import { paginationAdapter } from '../utils/paginatorAdapter';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   createQueries,
   filterInitialState,
@@ -21,6 +21,7 @@ import {
 } from './character.utils';
 import { FilterState } from '../models/filterOptions';
 import { FilterOptions } from '../models/filterState';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,15 @@ export class CharacterService {
 
     this.http
       .get<ResponseDto>(endpoint, filterOption && { params })
-      .pipe()
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 404) {
+            this.paginatorInfo.set(paginatorInitialState);
+            this.characterBank.set([]);
+          }
+          return throwError(() => err);
+        }),
+      )
       .subscribe((res) => {
         this.paginatorInfo.update((prev: PaginatorInfo) =>
           paginationAdapter(prev, res),

@@ -101,12 +101,34 @@ $main-content-height: 100dvh - variables.$toolbar-height - $toolbar-height;
   right: 48%;
 }
 
+.not-found {
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+  margin-top: 5rem;
+  width: fit-content;
+  .material-symbols-outlined {
+    margin-top: 4rem;
+    transform: scale(5);
+  }
+  span {
+    margin-inline: auto;
+  }
+  .error {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  .suggestion {
+    font-size: 1.5rem;
+    font-weight: normal;
+    opacity: 0.8;
+  }
+}
 @media (max-width: 90rem) {
-  .list__toolbar__form--desktop {
+  .list__toolbar__form {
     display: none;
   }
   .list__toolbar {
-    justify-content: flex-start;
     padding: 0;
     margin: 0;
   }
@@ -134,5 +156,19 @@ $main-content-height: 100dvh - variables.$toolbar-height - $toolbar-height;
   }
   .list__card__actions {
     margin-top: 1rem;
+  }
+  .list__toolbar {
+    height: auto;
+  }
+  .not-found {
+    .error {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .suggestion {
+      font-size: 1rem;
+      font-weight: normal;
+      opacity: 0.8;
+    }
   }
 }
