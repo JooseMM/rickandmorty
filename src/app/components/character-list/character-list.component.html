@@ -19,7 +19,7 @@
       </mat-chip-option>
     </mat-chip-listbox>
     <!-- search -->
-    <mat-form-field appearance="outline" class="list__toolbar__form">
+    <mat-form-field appearance="outline" class="list__toolbar__form--desktop">
       <input
         matInput
         [placeholder]="'Search by character name'"
@@ -33,7 +33,7 @@
     <!-- paginator -->
     <mat-paginator
       aria-labelledby="Paginator for character list"
-      class="list__paginator"
+      class="list__paginator--desktop"
       [length]="paginatorInfo().length"
       [pageSize]="paginatorInfo().pageSize"
       [pageSizeOptions]="paginatorInfo().pageSizeOptions"

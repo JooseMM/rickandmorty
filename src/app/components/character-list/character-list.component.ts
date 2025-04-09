@@ -1,16 +1,5 @@
-import {
-  Component,
-  computed,
-  inject,
-  OnInit,
-  Signal,
-  ViewChild,
-} from '@angular/core';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent,
-} from '@angular/material/paginator';
+import { Component, computed, inject, OnInit, Signal } from '@angular/core';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { isMobile } from '../../utils/isMobile';

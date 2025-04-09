@@ -126,3 +126,21 @@ a {
     margin-bottom: 1rem;
   }
 }
+@media (max-width: 90rem) {
+  .list__toolbar__form--mobile {
+    margin-top: 1.5rem;
+    margin-left: 0.8rem;
+    width: 90%;
+
+    mat-icon {
+      transform: scale(1.1);
+    }
+    @include mat.form-field-overrides(
+      (
+        container-height: 0,
+        container-vertical-padding: 0.8rem,
+        outlined-container-shape: 2rem,
+      )
+    );
+  }
+}

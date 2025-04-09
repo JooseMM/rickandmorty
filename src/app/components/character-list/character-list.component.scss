@@ -36,6 +36,9 @@ $main-content-height: 100dvh - variables.$toolbar-height - $toolbar-height;
     )
   );
 }
+.list__toolbar__form--desktop {
+  @extend .list__toolbar__form;
+}
 .list__toolbar__chip {
   margin-right: 2rem;
   @include mat.icon-overrides(
@@ -96,4 +99,16 @@ $main-content-height: 100dvh - variables.$toolbar-height - $toolbar-height;
   transform: scale(2);
   top: 40%;
   right: 48%;
+}
+
+@media (max-width: 90rem) {
+  .list__toolbar__form--desktop {
+    display: none;
+  }
+  .list__paginator--desktop {
+    display: none;
+  }
+  .list__toolbar {
+    justify-content: flex-start;
+  }
 }

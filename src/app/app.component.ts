@@ -31,6 +31,8 @@ import { speciesArray } from './utils/characterSpeciesBank';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CharacterService } from './services/character.service';
 import { FilterOptions } from './models/filterState';
+import { debounceTime, Subject } from 'rxjs';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +41,7 @@ import { FilterOptions } from './models/filterState';
     RouterLinkActive,
     MatToolbar,
     MatIcon,
+    MatPaginatorModule,
     MatSlideToggle,
     FormsModule,
     RouterLink,
@@ -57,7 +60,7 @@ import { FilterOptions } from './models/filterState';
 export class AppComponent implements OnInit {
   protected readonly characterService = inject(CharacterService);
   protected readonly routerService = inject(Router);
-  protected readonly speciesList = ['All', ...speciesArray];
+  protected readonly speciesList = ['', ...speciesArray];
   protected drawerMode: DrawerMode = 'over';
   private readonly themeService = inject(ThemeService);
   protected isDarkThemeSelected = computed(() =>
@@ -71,8 +74,14 @@ export class AppComponent implements OnInit {
       return false;
     }
   });
+  private searchSubject = new Subject<string>();
+  protected searchByName = '';
+  filterOptions: any;
   ngOnInit(): void {
     this.setDrawerMode();
+    this.searchSubject.pipe(debounceTime(700)).subscribe((value) => {
+      this.characterService.setFilterState(this.filterOptions.ByName, value);
+    });
   }
   toggleTheme(): void {
     this.themeService.toggleTheme();
@@ -99,5 +108,8 @@ export class AppComponent implements OnInit {
         return item;
       }),
     }));
+  }
+  onSearchByName(name: string) {
+    this.searchSubject.next(name);
   }
 }
